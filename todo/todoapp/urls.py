@@ -9,7 +9,5 @@ urlpatterns = [
     path('createtask', TodoFormView.as_view(), name='createtask'),
     path('<int:id>', task_detail_view, name='detailtask'),
     path('update/<int:id>', TaskUpdateView.as_view(), name='updatetask'),
-    path('sendmail', alertemail),
-    path('alert', alertfunc),
 
 ]

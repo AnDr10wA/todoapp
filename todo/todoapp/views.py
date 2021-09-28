@@ -77,27 +77,5 @@ class TaskUpdateView(View):
         return render(request, self.template_name, {'form':form})
 
 
-def alertemail(request):
-    fadd = 'applicationtodo243@gmail.com'
-    tadd  = 'andr10wa@gmail.com'
-    msg = 'hello, i am todoapplication'
-    username = 'applicationtodo243@gmail.com'
-    password = 'secret_todo'
-    server = smtplib.SMTP('smtp.gmail.com', 587)
-    server.starttls()
-    server.login(username, password)
-    server.sendmail(fadd, tadd, msg)
 
-    return viewtasks(request)
-
-
-def alertfunc(request):
-    task = TodoModel.objects.filter(status = 'progress')
-    for i in task:
-        print(i.date_deadline)
-        print(datetime.now())
-
-
-
-    return viewtasks(request)
 
