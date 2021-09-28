@@ -1,0 +1,17 @@
+{%  extends 'base.html' %}
+
+
+{%  block content %}
+
+
+{{task.name}}<br>
+
+{{task.comment}}<br>
+
+{{task.date_deadline}}<br>
+
+
+<a href="{% url 'todoapp:updatetask' task.id %}">Обновить</a>
+
+
+{% endblock %}

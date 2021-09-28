@@ -1,0 +1,16 @@
+{%  extends 'base.html' %}
+
+
+{%  block content %}
+
+{% for element in tasks  %}
+<a href="{% url 'todoapp:detailtask' element.id %}">
+{{element.name}}
+{{element.comment}}
+{{element.date_deadline}}</a> <br>
+
+{% endfor %}
+
+<a href="{% url 'todoapp:createtask' %}">Добавить</a>
+
+{% endblock %}
