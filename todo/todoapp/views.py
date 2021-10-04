@@ -1,81 +1,52 @@
-from django.shortcuts import render, redirect, get_list_or_404
-from django.http import HttpResponse
+import os
+
+from django.shortcuts import render, redirect
+from django.views.generic import View
 from .models import TodoModel
 from .form import TodoFrom
-from django.views import View
-import smtplib
-from datetime import datetime
 
 
+class MainView(View):
+    form = TodoFrom
 
-def viewtasks(request):
-
-    tasks = TodoModel.objects.all()
-
-    return render(request, 'main.html', {'tasks':tasks})
-
-class TodoFormView(View):
-    form_class = TodoFrom
-    initial = {'key':'value'}
-    template_name = 'form.html'
-
-    def get(self,request):
-
-        form = self.form_class(initial=self.initial)
-        return render(request, self.template_name, {'form':form})
     def post(self,request):
-        form = self.form_class(request.POST)
-        print(form)
-        if form.is_valid():
-            print(form)
-            data = form.cleaned_data
-            name = data['name']
-            comment = data['comment']
-            date_deadline = data['date_deadline']
-            date_reminder = data['date_reminder']
-            priority = data['priority']
-            status = data['status']
-            TodoModel.objects.create(name = name, comment = comment, date_deadline = date_deadline,
-                                     date_reminder=date_reminder, priority=priority, status=status)
-
-            return viewtasks(request)
-        return render(request, self.template_name, {'form':form})
+        if request.method == 'POST' and 'btn-add' in request.POST:
+            self.form = TodoFrom(request.POST)
+            if self.form.is_valid():
+                self.form.save()
 
 
-def task_detail_view(request, id):
-    task = get_list_or_404(TodoModel, id=id)
-    return render(request, 'detail.html', {'task':task[0]})
+        elif request.method == 'POST' and 'btn-del' in request.POST:
+            task = TodoModel.objects.filter(pk=request.POST['btn-del'])
+            task.delete()
+
+        elif request.method == 'POST' and 'btn-edit' in request.POST:
+            self.form = TodoFrom(request.POST)
+            if self.form.is_valid():
+                task = TodoModel.objects.filter(pk=request.POST['btn-edit'])
+                for i in task:
+                    print(request.POST)
+                    i.name = request.POST['name']
+                    i.save()
+
+        elif request.method == 'POST' and 'btn-slide' in request.POST:
+            task = TodoModel.objects.filter(pk=request.POST['btn-slide'])
+            for i in task:
+                i.status = True
+                i.save()
+
+        elif request.method == 'POST' and 'btn-slide-back' in request.POST:
+            task = TodoModel.objects.filter(pk=request.POST['btn-slide-back'])
+            for i in task:
+                i.status = False
+                i.save()
+
+        return self.get(request)
 
 
-
-class TaskUpdateView(View):
-    form_class = TodoFrom
-
-    initial = {'key':'value'}
-    template_name = 'form.html'
-    def get(self, request, id):
-        instance = TodoModel.objects.get(id=id)
-        form = self.form_class(initial=self.initial, instance=instance)
-
-        return render(request, self.template_name, {'form':form})
-    def post(self,request, id):
-        form = self.form_class(request.POST)
-        print(form)
-        if form.is_valid():
-            print(form)
-            data = form.cleaned_data
-            name = data['name']
-            comment = data['comment']
-            date_deadline = data['date_deadline']
-            date_reminder = data['date_reminder']
-            priority = data['priority']
-            status = data['status']
-            TodoModel.objects.filter(id=id).update(name = name, comment = comment, date_deadline = date_deadline,
-                                     date_reminder=date_reminder, priority=priority, status=status)
-
-            return viewtasks(request)
-        return render(request, self.template_name, {'form':form})
-
-
-
+    def get(self, request):
+        tasks_in = TodoModel.objects.filter(status=False)
+        tasks_done = TodoModel.objects.filter(status=True)
+        return render(request, 'main.html', {'form': self.form, 'tasks_in': tasks_in,
+                                             'tasks_done': tasks_done})
 
