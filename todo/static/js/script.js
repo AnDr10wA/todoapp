@@ -26,3 +26,5 @@ function clearThis(target) {
     target.value= '';
 }
 
+$(document).ready(() => { $('input#id_name').val(''); });
+

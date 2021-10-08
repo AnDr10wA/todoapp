@@ -1,14 +1,14 @@
-header{
+header {
     height: 90px;
     border-bottom: black solid 1px;
     margin-bottom: 30px;
 }
 
-.title-to-do{
+.title-to-do {
     padding-top: 25px;
 }
 
-.not-done{
+.not-done {
     margin-bottom: 20px;
 }
 
@@ -19,12 +19,12 @@ header{
     min-height: 100px;
 }
 
-.first-table{
+.first-table {
     border-top: #FF9273 solid 2px;
     border-bottom: #FF9273 solid 2px
 }
 
-.second-table{
+.second-table {
     border-top: #B3F36D solid 2px;
     border-bottom: #B3F36D solid 2px;
 }
@@ -34,7 +34,7 @@ label {
     width: 100%;
 }
 
-.btn_{
+.btn_ {
     float: right;
     border: 0px;
     margin-bottom: 3px;
@@ -43,48 +43,52 @@ label {
     margin-top: 1px;
 }
 
-.btn-del:hover{
+.btn-del:hover {
     background-color: #ff5d49;
 }
 
-.btn-edit:hover{
-    background-color: rgba(123,123,124,0.99);
+.btn-edit:hover {
+    background-color: rgba(123, 123, 124, 0.99);
 }
-.btn-edit{
+
+.btn-edit {
     background-color: darkgrey;
     margin-right: 5px;
 }
 
-.btn-del{
+.btn-del {
     background-color: #FF9273;
 }
 
-.one-task{
+.one-task {
     border-bottom: black 1px solid;
     font-size: 18px;
     margin-bottom: 5px;
 }
-.one-task-w{
+
+.one-task-w {
 }
 
-.input-task{
+.input-task {
     margin-top: 20px;
 }
-.btn-add{
+
+.btn-add {
     margin-top: 25px;
     border-radius: 3px;
     background-color: #FFCE47;
     border: 0px;
 }
-.form{
+
+.form {
     margin-top: 20px;
 }
 
-.svg-add:hover{
+.svg-add:hover {
     color: darkgrey;
 }
 
-.btn-hid{
+.btn-hid {
     border: 0px;
     background-color: #fff;
 }
